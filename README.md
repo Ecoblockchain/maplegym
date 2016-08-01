@@ -176,7 +176,7 @@ maps/mobs/items, all jobs implemented, perhaps working quests, etc.
 
 It all depends on how much attention this gets (I'm not hopeful), how motivated
 I feel, and whether the capitalist grim reaper comes calling again soon. The
-next hypothetical task is probably be to turn everything into code (rather than
+next hypothetical task is probably to turn everything into code (rather than
 mysteriously patched binaries) so other people can contribute.
 
 Pull requests and issues are warmly welcomed.
