@@ -1,6 +1,6 @@
 import maplegym
 
-r_actions = {y: x for x, y in maplegym.possible_actions.iteritems()}
+r_actions = {y: x for x, y in maplegym.action_table.iteritems()}
 
 for s, a, r, s2 in maplegym.recorder.record():
     if (a > 0) or (r > 0):

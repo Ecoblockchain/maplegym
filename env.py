@@ -34,7 +34,7 @@ class MapleEnv(gym.Env):
             self.maple.show_screen()
 
         self.observation_space = colorspace(800, 525, 3)
-        self.action_space = gym.spaces.Discrete(len(possible_actions))
+        self.action_space = gym.spaces.Discrete(len(action_table))
 
         self._first_reset = True
 
