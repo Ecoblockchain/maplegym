@@ -1,0 +1,8 @@
+LIBRARY MapleControllerLib
+EXPORTS
+  DoAction
+  TerminateProcessById
+  RunMapleStoryW
+  GetMapleScreen
+  GetLastAction
+  ShowMapleWindow

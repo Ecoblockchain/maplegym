@@ -1,0 +1,7 @@
+*.VC.db
+*.VC.VC.opendb
+*.vcxproj.filters
+*.vcxproj.user
+/ForceWindowMode/Release
+/MapleController/Release
+/MapleControllerLib/Release
