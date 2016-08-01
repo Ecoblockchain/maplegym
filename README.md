@@ -1,29 +1,32 @@
 # maplegym
 
 maplegym adds [MapleStory](http://maplestory.nexon.net) to [OpenAI
-Gym](https://gym.openai.com/) so you can teach programs (these days, probably
-neural networks) to play for you.
+Gym](https://gym.openai.com/) so you can teach programs (these days,
+probably neural networks) to play for you.
 
 ## Installation
 
 ```
-pip install gym maplegym
+pip install gym
+git clone https://github.com/brhs/maplegym
 ```
 
-(On OS X and Linux, you may have to add `sudo`.)
+Move the maplegym folder into your project directory so you can
+`import` it.
 
-You'll also have to download maplegym's grotesquely modified MapleStory client
-from [here](#) and unzip it to `C:\Nexon\MapleStory`. Sorry; I'm working on it.
+Then, download maplegym's [modified MapleStory client](#) and unzip it
+to `C:\Nexon\MapleStory`.
 
 ## Usage
 
 First, read the [Gym documentation](https://gym.openai.com/docs).
 
-Running `import maplegym` automatically registers maplegym as an environment
-with Gym. Create an environment using `gym.make('MapleGym-v0')`.
+Running `import maplegym` registers maplegym as an environment with
+Gym. Create an environment using `gym.make('MapleGym-v0')`.
 
-To slice a 60 FPS game into timesteps, we define a "step" as a 0.2s pause
-after the action. You can change this by setting `maplegym.conf.timestep`.
+To slice gameplay into timesteps, we define a "step" as a 0.2s
+pause after each action. You can change this by setting
+`maplegym.conf.timestep`.
 
 Here are the standard Gym variables:
 
@@ -34,14 +37,14 @@ Here are the standard Gym variables:
  *  `done` (bool) is True if you've reached level 70.
  *  `info` (dict) usually contains diagnostic info but maplegym doesn't use it.
 
-## Implementation details
+## Gameplay
 
 maplegym uses an old version of the game (v.55) from about 2008. The maplegym
 `Env` automatically starts a (very) small MapleStory server that handles
 gameplay basics.
 
-In general, the idea is for the metagame to be removed completely so the agent
-can focus on fighting monsters. Thus...
+In general, I try to remove the metagame so the agent can focus on
+fighting monsters. Thus...
     
  *  You're a Bandit.
 
@@ -49,45 +52,34 @@ can focus on fighting monsters. Thus...
     the right level, you're automatically teleported to the next map.
 
  *  Items, AP, and SP are disabled. Your stats and skills are raised
-    automatically, you automatically get level-appropriate equipment, and when
-    you pick up monster drops, you're immediately compensated for item's shop
-    price.
+    automatically, you automatically get new eqiups, and when you pick
+    up items you're immediately compensated for the item's shop price.
 
  *  There's no HP or MP. When you're damaged or use a skill, you lose mesos
-    equal to the amount of HP or MP lost. (You have a floor at 0.)
+    equal to the amount of HP or MP lost. (Your mesos can't go under 0.)
 
- *  Every UI element is removed. The game screen is an image of nothing
+ *  The game UI is completely removed. The screen is an image of nothing
     but you fighting monsters.
 
- *  All keys (and mouse clicks) are disabled except Control, Z, Alt, and the
-    arrow keys, which correspond to Attack, Loot, Jump, and movement. Buffs
-    are cast automatically, and your Control key is automatically remapped
-    to your latest feasible attacking skill (Double Stab or Savage Blow). [1]
+ *  All keys and mouse clicks are disabled except Control, Z, Alt, and
+    the arrow keys, which correspond to Attack, Loot, Jump, and movement.
+    Buffs are cast automatically, and "attack" automatically casts
+    your latest feasible attacking skill (regular attack, Double Stab,
+    or Savage Blow). [1]
 
- *  The EXP curve is rewritten to be much more lenient, since the environment
-    is supposed to be well-defined and return well-defined rewards, not take
+ *  The EXP curve is rewritten to be much more lenient, since the goal
+    is not an environment that takes
     forever to beat.
 
 This reduces the game to a bitmap state, a small set of abstract actions (e.g.
 "attack"), and a unified reward structure.
 
-Most of these tweaks are done on the server. Client-side modifications are made
-using two DLLs, MapleController and MapleControllerLib. MapleController is
-injected into MapleStory and installs a bunch of hooks.  MapleControllerLib is
-the Python/C bridge and is responsible for, among other things, launching
-MapleStory and injecting MapleController.
-
-A third uninteresting DLL, ForceWindowMode, does what its name suggests. I
-considered using DXWnd, but it had a lot of unnecessary features and didn't
-have an API. I also disabled the client's gratuitous packet encryption and
-removed 600 MB of unused game data.
-
 ## Recorder
 
-Many reinforcement learning algorithms start with a seed of past experiences so
-the agent doesn't spend ages stumbling around like a human toddler. The
-`maplegym.recorder.record` function lets you play the game yourself and record
-your gameplay:
+Many reinforcement learning algorithms start with a seed of past
+experiences so the agent doesn't spend ages stumbling around like a
+human toddler. The `maplegym.recorder.record` function lets you play
+the game yourself and record your gameplay:
 
 ```python
 import maplegym
