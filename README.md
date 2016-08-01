@@ -29,9 +29,9 @@ Here are the standard Gym variables:
 
  *  `observation` (600×800×3 uint8 array) is the game screen's RGB pixel data.
  *  `action` (uint8) is a number in `range(20)`; see [this](actions.md).
- *  `reward` (uint32) is how much your character's cumulative EXP plus his money has
-    increased in the last timestep.
- *  `done` (bool) is True if the character has reached level 70.
+ *  `reward` (uint32) is how much your cumulative EXP plus money has increased
+    in the last timestep.
+ *  `done` (bool) is True if you've reached level 70.
  *  `info` (dict) usually contains diagnostic info but maplegym doesn't use it.
 
 ## Implementation details
@@ -43,15 +43,15 @@ gameplay basics.
 In general, the idea is for the metagame to be removed completely so the agent
 can focus on fighting monsters. Thus...
     
- *  Your character is a Bandit.
+ *  You're a Bandit.
 
  *  The game takes place on a small set of maps; when you reach
     the right level, you're automatically teleported to the next map.
 
  *  Items, AP, and SP are disabled. Your stats and skills are raised
-    automatically, your character automatically gets level-appropriate
-    equipment, and when you pick up monster drops, you're immediately
-    compensated for item's shop price.
+    automatically, you automatically get level-appropriate equipment, and when
+    you pick up monster drops, you're immediately compensated for item's shop
+    price.
 
  *  There's no HP or MP. When you're damaged or use a skill, you lose mesos
     equal to the amount of HP or MP lost. (You have a floor at 0.)
