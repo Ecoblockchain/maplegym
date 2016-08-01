@@ -1,4 +1,4 @@
-from env import possible_actions
+from env import action_table
 from gym.envs.registration import registry, register, make, spec
 
 import conf

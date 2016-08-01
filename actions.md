@@ -2,7 +2,7 @@
 
 These are the possible actions and their meanings.
 
-| Number | Action |
+| Number | Action code |
 | ------ | ------ |
 | 0      | `do_nothing` |
 | 1      | `attack_still` |
@@ -24,3 +24,10 @@ These are the possible actions and their meanings.
 | 17     | `attack_left` |
 | 18     | `loot_left` |
 | 19     | `jump_left` |
+
+You can also use `maplegym.action_table`:
+
+```python
+>>> print maplegym.action_table['move_up']
+4
+```

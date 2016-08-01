@@ -10,7 +10,7 @@ import numpy as np
 import conf
 from mapleinstance import MapleInstance
 
-possible_actions = [
+_actions = [
     'do_nothing', 'attack_still', 'loot_still', 'jump_still',
     'move_up',    'attack_up',    'loot_up',    'jump_up',
     'move_right', 'attack_right', 'loot_right', 'jump_right',
@@ -18,7 +18,8 @@ possible_actions = [
     'move_left',  'attack_left',  'loot_left',  'jump_left',
 ]
 
-possible_actions = {x: i for i, x in enumerate(possible_actions)}
+# _actions => range(20)
+action_table = {x: i for i, x in enumerate(_actions)}
 
 
 def colorspace(w, h, channels):
