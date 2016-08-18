@@ -41,6 +41,16 @@ class MapleInstance:
     def show_screen(self):
         self.controller.ShowMapleWindow()
 
+    def _suspend(self, suspend):
+        self.controller.SuspendMapleStory(ctypes.c_ulong(self.pid),
+                                          ctypes.c_int(suspend))
+
+    def suspend(self):
+        self._suspend(True)
+
+    def resume(self):
+        self._suspend(False)
+
     @property
     def player(self):
         return self.server.state.player

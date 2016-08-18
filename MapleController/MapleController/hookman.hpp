@@ -24,6 +24,7 @@ private:
 public:
   HookMan(VOID);
   BOOL AddHooks(LPCHOOKINFO lpcHooks, DWORD cdwCount);
+  VOID AddToHookMap(HookMap* pHookMap, LPCHOOKINFO lpcHooks, DWORD cdwCount);
   LONG RunDetours(BOOL fSet, HookMap hooks);
   BOOL ToggleHooks(BOOL fSet, HookMap hooks);
   BOOL Toggle(BOOL fSet);

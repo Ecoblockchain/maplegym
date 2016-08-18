@@ -1,11 +1,10 @@
 import os
 import time
-import subprocess
 import ctypes
+import subprocess
 
 import gym
 import gym.spaces
-import numpy as np
 
 import conf
 from mapleinstance import MapleInstance
@@ -28,13 +27,17 @@ def colorspace(w, h, channels):
 
 class MapleEnv(gym.Env):
     def __init__(self):
+        self.observation_space = colorspace(w=800, h=525, channels=3)
+        self.action_space = gym.spaces.Discrete(len(action_table))
+
         self.maple = MapleInstance()
         self.maple.start()
+
         if conf.show_screen:
             self.maple.show_screen()
 
-        self.observation_space = colorspace(800, 525, 3)
-        self.action_space = gym.spaces.Discrete(len(action_table))
+        if conf.suspend_between_steps:
+            self.maple.suspend()
 
         self._first_reset = True
 
@@ -42,10 +45,16 @@ class MapleEnv(gym.Env):
         self.maple.stop()
 
     def _step(self, action):
+        if conf.suspend_between_steps:
+            self.maple.resume()
+
         self.maple.send_action(action)
         time.sleep(conf.timestep)
-
         reward, done = self.maple.get_reward()
+
+        if conf.suspend_between_steps:
+            self.maple.suspend()
+
         return self._get_obs(), reward, done, {}
 
     def _reset(self):
@@ -55,5 +64,4 @@ class MapleEnv(gym.Env):
         return self._get_obs()
 
     def _get_obs(self):
-        screen = self.maple.get_screen()
-        return np.reshape(screen[:800 * 525 * 3], (525, 800, 3))
+        return self.maple.get_screen()

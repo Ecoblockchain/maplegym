@@ -1,4 +1,5 @@
 #include "main.h"
+#include "suspend.h"
 
 HMODULE hModule;
 
@@ -22,12 +23,15 @@ HWND GetMapleWindow(VOID)
   return hWnd;
 }
 
-BOOL APIENTRY DllMain(HINSTANCE _hModule, DWORD fdwReason, LPVOID)
+BOOL APIENTRY DllMain(HINSTANCE _hModule, DWORD fdwReason)
 {
-  if (fdwReason == DLL_PROCESS_ATTACH)
+  while (fdwReason == DLL_PROCESS_ATTACH)
   {
     hModule = _hModule;
-    DisableThreadLibraryCalls(hModule);
+    if (InitSuspender())
+      if (DisableThreadLibraryCalls(hModule))
+          break;
+    return FALSE;
   }
   return TRUE;
 }

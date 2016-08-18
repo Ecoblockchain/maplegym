@@ -6,3 +6,4 @@ EXPORTS
   GetMapleScreen
   GetLastAction
   ShowMapleWindow
+  SuspendMapleStory

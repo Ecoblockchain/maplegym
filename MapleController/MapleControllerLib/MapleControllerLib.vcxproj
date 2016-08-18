@@ -18,6 +18,20 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="launcher.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="messages.cpp" />
+    <ClCompile Include="screen.cpp" />
+    <ClCompile Include="suspend.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
+    <ClInclude Include="suspend.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FF24F001-EAC9-4762-BBD6-51B4451985C4}</ProjectGuid>
     <RootNamespace>MapleControllerLib</RootNamespace>
@@ -118,18 +132,6 @@
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="messages.cpp" />
-    <ClCompile Include="launcher.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="screen.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="main.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exports.def" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

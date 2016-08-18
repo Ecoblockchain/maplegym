@@ -5,19 +5,24 @@ HookMan::HookMan(VOID)
   m_fInstalled = FALSE;
 }
 
-BOOL HookMan::AddHooks(LPCHOOKINFO lpcHooks, DWORD cdwCount)
+VOID HookMan::AddToHookMap(HookMap* pHookMap, LPCHOOKINFO lpcHooks, DWORD cdwCount)
 {
   for (DWORD i = 0; i < cdwCount; i++)
-    m_hooks.insert(HookEntry(lpcHooks[i].ppTarget, lpcHooks[i].pDetour));
+    pHookMap->insert(HookEntry(lpcHooks[i].ppTarget, lpcHooks[i].pDetour));
+}
+
+BOOL HookMan::AddHooks(LPCHOOKINFO lpcHooks, DWORD cdwCount)
+{
+  AddToHookMap(&m_hooks, lpcHooks, cdwCount);
 
   if (m_fInstalled)
   {
-    HookMap hookmap;
+    HookMap hmap;
 
-    for (DWORD i = 0; i < cdwCount; i++)
-      hookmap.insert(HookEntry(lpcHooks[i].ppTarget, lpcHooks[i].pDetour));
-    return ToggleHooks(TRUE, hookmap);
+    AddToHookMap(&hmap, lpcHooks, cdwCount);
+    return ToggleHooks(TRUE, hmap);
   }
+
   return TRUE;
 }
 
