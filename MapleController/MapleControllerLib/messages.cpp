@@ -6,8 +6,8 @@
 #define WM_CONTROLPLAYER  (WM_USER + 0xBEEF)
 #define WM_GETLASTACTION  (WM_USER + 0xBEEF + 1)
 
-#define MOVEMENT_COUNT 5  // {nop, up, right, down, left}
-#define COMMAND_COUNT  4  // {nop, attack, loot, jump}
+#define MOVEMENT_COUNT 5  // nop, up, right, down, left
+#define COMMAND_COUNT  4  // nop, attack, loot, jump
 
 BOOL DecodeAction(WORD wAction, LPWORD lpwMovement, LPWORD lpwCommand)
 {

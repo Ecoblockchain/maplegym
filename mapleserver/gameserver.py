@@ -38,9 +38,10 @@ def on_player_connect(client, packet):
         return client.close()
 
     serv.s.player = client
+    char = client.s.char = mutil.create_character()
+
     _player_login_event.set()
 
-    char = client.s.char = mutil.create_character()
     client.send('char_connect', char, get_server_time())
     client.send('send_keymap', char)
     client.s.map = GameMap(char.map, client)

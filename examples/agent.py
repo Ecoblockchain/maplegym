@@ -27,6 +27,7 @@ class Agent:
 
 def run_episode(env, agent):
     obs = env.reset()
+
     while True:
         action = agent.act(obs)
         obs, reward, done, info = env.step(action)
@@ -35,8 +36,11 @@ def run_episode(env, agent):
 
 
 if __name__ == '__main__':
+    print 1
     env = gym.make('MapleGym-v0')
+    print 2
     agent = Agent()
+    print 3
 
     for episode in range(100):
         run_episode(env, agent)

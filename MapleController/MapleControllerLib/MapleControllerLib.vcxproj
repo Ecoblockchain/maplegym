@@ -29,6 +29,7 @@
     <ClCompile Include="suspend.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="d3d8.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="suspend.h" />
   </ItemGroup>

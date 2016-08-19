@@ -61,6 +61,10 @@ class MapleEnv(gym.Env):
         self.score = 0
         self.maple.reset(self._first_reset)
         self._first_reset = False
+
+        # wait for screen to render (ugly)
+        time.sleep(0.5)  
+
         return self._get_obs()
 
     def _get_obs(self):
