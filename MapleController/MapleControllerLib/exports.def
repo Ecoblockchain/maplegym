@@ -1,9 +1,11 @@
 LIBRARY MapleControllerLib
 EXPORTS
   DoAction
-  TerminateProcessById
-  RunMapleStoryW
-  GetMapleScreen
   GetLastAction
+
+  RunMapleStoryW
+  TerminateMapleStory
+
+  GetMapleScreen
   ShowMapleWindow
   SuspendMapleStory

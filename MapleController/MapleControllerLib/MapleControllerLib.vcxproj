@@ -22,7 +22,7 @@
     <None Include="exports.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="launcher.cpp" />
+    <ClCompile Include="process.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messages.cpp" />
     <ClCompile Include="screen.cpp" />
@@ -31,6 +31,8 @@
   <ItemGroup>
     <ClInclude Include="d3d8.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="process.h" />
+    <ClInclude Include="screen.hpp" />
     <ClInclude Include="suspend.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

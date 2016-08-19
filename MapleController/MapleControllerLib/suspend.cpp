@@ -1,7 +1,7 @@
 #include "suspend.h"
 
 LONG (NTAPI * NtSuspendProcess)(HANDLE ProcessHandle) = NULL;
-LONG (NTAPI * NtResumeProcess)(HANDLE ProcessHandle) = NULL;
+LONG (NTAPI * NtResumeProcess)(HANDLE ProcessHandle)  = NULL;
 
 BOOL InitNtFunctions(VOID)
 {
@@ -24,43 +24,31 @@ BOOL InitNtFunctions(VOID)
 
 BOOL EnableDebugPrivilege(VOID)
 {
-  HANDLE            hToken = NULL;
-  LUID              luid;
-  TOKEN_PRIVILEGES  priv;
+  HANDLE           hToken = NULL;
+  TOKEN_PRIVILEGES priv;
 
   if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &hToken))
     return FALSE;
 
-  if (!LookupPrivilegeValueW(NULL, SE_DEBUG_NAME, &luid))
+  if (!LookupPrivilegeValueW(NULL, SE_DEBUG_NAME, &priv.Privileges[0].Luid))
     return FALSE;
 
   priv.PrivilegeCount           = 1;
-  priv.Privileges[0].Luid       = luid;
   priv.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
-  return AdjustTokenPrivileges(hToken, FALSE, &priv, sizeof(TOKEN_PRIVILEGES), NULL, NULL);
+  return AdjustTokenPrivileges(hToken, FALSE, &priv, sizeof(priv), NULL, NULL);
 }
 
-BOOL InitSuspender(VOID)
+BOOL SuspendMapleStory(BOOL fSuspend)
 {
-  return (InitNtFunctions() && EnableDebugPrivilege());
-}
+  static BOOL bSuspended = FALSE;
 
-BOOL SuspendMapleStory(DWORD dwProcessId, BOOL fSuspend)
-{
-  static BOOL   bSuspended = FALSE;
-  /****/ HANDLE hProcess = NULL;
-
-  if (fSuspend == bSuspended)
+  if (bSuspended == fSuspend)
     return FALSE;
 
-  hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwProcessId);
-  if (hProcess != NULL)
-  {
-    if ((fSuspend ? NtSuspendProcess : NtResumeProcess)(hProcess) == STATUS_SUCCESS)
+  if (hMapleProcess == NULL)
+    if ((fSuspend ? NtSuspendProcess : NtResumeProcess)(hMapleProcess) == STATUS_SUCCESS)
       bSuspended = fSuspend;
-    CloseHandle(hProcess);
-  }
 
   return (bSuspended == fSuspend);
 }

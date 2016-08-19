@@ -21,7 +21,7 @@ class MapleInstance:
         self.server = mapleserver.start()
 
         exe = unicode(os.path.join(conf.maple_folder, 'localhost.exe'))
-        self.pid = self.controller.RunMapleStoryW(exe)
+        self.controller.RunMapleStoryW(exe)
         self.server.wait_login()
 
         print '[maplegym] MapleStory is now running.'
@@ -30,7 +30,7 @@ class MapleInstance:
         self.stop()
 
     def stop(self):
-        self.controller.TerminateProcessById(ctypes.c_ulong(self.pid))
+        self.controller.TerminateMapleStory()
         self.server.stop()
         print '[maplegym] MapleStory was terminated.'
 
@@ -42,8 +42,7 @@ class MapleInstance:
         self.controller.ShowMapleWindow()
 
     def _suspend(self, suspend):
-        self.controller.SuspendMapleStory(ctypes.c_ulong(self.pid),
-                                          ctypes.c_int(suspend))
+        self.controller.SuspendMapleStory(ctypes.c_int(suspend))
 
     def suspend(self):
         self._suspend(True)

@@ -28,7 +28,7 @@ BOOL APIENTRY DllMain(HINSTANCE _hModule, DWORD fdwReason, LPVOID)
   while (fdwReason == DLL_PROCESS_ATTACH)
   {
     hModule = _hModule;
-    if (InitSuspender())
+    if (InitNtFunctions())
       if (DisableThreadLibraryCalls(hModule))
         break;
     return FALSE;
