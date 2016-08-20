@@ -8,12 +8,17 @@
 
 BOOL SetHook(BOOL fSet, PVOID* ppTarget, PVOID pDetour)
 {
+  BOOL bRET = FALSE;
+
   if (DetourTransactionBegin() == NO_ERROR)
+  {
     if (DetourUpdateThread(GetCurrentThread()) == NO_ERROR)
       if ((fSet ? DetourAttach : DetourDetach)(ppTarget, pDetour) == NO_ERROR)
         if (DetourTransactionCommit() == NO_ERROR)
-          return TRUE;
-  return FALSE;
+          bRET = TRUE;
+    DetourTransactionAbort();
+  }
+  return bRET;
 }
 
 #define AttachHook(x, y) SetHook(TRUE, x, y)
@@ -38,7 +43,7 @@ PVOID GetCreateDevicePointer(VOID)
 
 HRESULT (WINAPI * _CreateDevice)(IDirect3D8* This, UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags, D3DPRESENT_PARAMETERS* pPresentationParameters, IDirect3DDevice8** ppReturnedDeviceInterface) = NULL;
 
-#define InitCreateDevicePointer() ((*(PVOID*)&_CreateDevice = GetCreateDevicePointer()) != NULL)
+#define InitCreateDevicePointer() ((_CreateDevice = (decltype(_CreateDevice))GetCreateDevicePointer()) != NULL)
 
 HRESULT WINAPI CreateDevice(IDirect3D8* This, UINT Adapter, D3DDEVTYPE DeviceType, HWND hFocusWindow, DWORD BehaviorFlags, D3DPRESENT_PARAMETERS* pParams, IDirect3DDevice8** ppReturnedDeviceInterface)
 {

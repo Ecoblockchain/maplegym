@@ -11,9 +11,9 @@ pip install gym
 git clone https://github.com/brhs/maplegym
 ```
 
-Move the maplegym folder into your project directory so you can
-`import` it. Download maplegym's [modified MapleStory client](#) and
-unzip it to `C:\Nexon\MapleStory`.
+Move the maplegym folder into your project directory or `$PYTHONPATH` so you
+can `import` it. Install maplegym's [modified MapleStory
+client](https://github.com/brhs/maplegym/releases/tag/v1.0).
 
 ## Usage
 

@@ -36,6 +36,7 @@ class MapleInstance:
 
     def reset(self, first):
         self._score = 0
+        print 'resetting char'
         mapleserver.levels.reset_character(self.player, warp=not first)
 
     def show_screen(self):

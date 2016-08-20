@@ -4,8 +4,6 @@ import sys
 import gym
 import maplegym
 
-actions_rev = {y: x for x, y in maplegym.action_table.iteritems()}
-
 maplegym.conf.show_screen = True
 maplegym.conf.suspend_between_steps = False
 
@@ -16,10 +14,14 @@ class Agent:
 
     def get_actions(self):
         while True:
-            a = random.choice(maplegym.action_table.values())
+            yield maplegym.action_table['do_nothing']
+            
+            '''
+            .values())
             print 'doing action for 50 rounds: %s' % actions_rev[a]
             for _ in xrange(50):
                 yield a
+            '''
 
     def act(self, obs):
         return self.gen.next()

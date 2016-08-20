@@ -16,7 +16,7 @@ typedef struct _D3ARGB {
 
 #pragma pack(pop)
 
-class Screenshotter
+class Camera
 {
 private:
   LPDIRECT3DDEVICE8 m_lpDevice;
@@ -24,10 +24,10 @@ private:
   DWORD             m_dwHeight;
 
 public:
-  Screenshotter(VOID);
+  Camera(VOID);
 
   BOOL InitDirectX(HWND hWnd);
   VOID CopyPixels(D3DLOCKED_RECT* pRect, LPBYTE lpbDest, UINT nWidth, UINT nHeight);
-  BOOL CreateDevice(LPDIRECT3D8 lpDirect3D, HWND hWnd, const D3DDISPLAYMODE* pcMode);
+  HRESULT CreateDevice(LPDIRECT3D8 lpDirect3D, HWND hWnd, const D3DDISPLAYMODE* pcMode);
   BOOL Capture(HWND hWnd, LPBYTE lpbOutput);
 };

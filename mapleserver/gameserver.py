@@ -29,6 +29,7 @@ def on_player_disconnect(client, _):
     if m:
         m.warp(0)
 
+    print 'player disconnected'
     serv.s.player = None
 
 
@@ -40,6 +41,7 @@ def on_player_connect(client, packet):
     serv.s.player = client
     char = client.s.char = mutil.create_character()
 
+    print 'player connected'
     _player_login_event.set()
 
     client.send('char_connect', char, get_server_time())

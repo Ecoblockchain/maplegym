@@ -41,7 +41,7 @@ def create_character():
         'inventory': {'equipped': make_equip_set(1), 'mesos': 0},
         'skills': {'active': {}, 'levels': {}},
         'vars': {
-            'starttime': time.time(), 'exprate': 1, 'mesorate': 1,
+            'starttime': time.time(), 'exprate': 20, 'mesorate': 1,
             'droprate': 1, 'livemode': False,
         },
         'runs': [], 'keymap': conf.default_keymap[:],
